@@ -1,8 +1,27 @@
 EPIC Epitech BOBBY CARROT
 ================================
 
-*Using Three.js
-*Minified version comming...
+* Using Three.js
+* Minified version comming...
+
+### Install Dependencies
+
+Install last version of Chrome / Firefox / Opera
+
+#### Mac OS X / Linux 
+
+    $./serve.sh
+
+#### Windows
+    
+Not tested
+
+
+Commands
+-------------------------
+
+&larr; &uarr; &rarr; &darr; = Move
+
 
 <pre>
               _____
@@ -33,23 +52,3 @@ EPIC Epitech BOBBY CARROT
     '.__.-' `'-----'` '-.__.'
 </pre>
 Art found on (http://www.retrojunkie.com/asciiart/animals/rabbits.htm)
-
-### Install Dependencies
-
-Install last version of Chrome / Firefox / Opera
-
-#### Mac OS X / Linux 
-
-    $./serve.sh
-
-#### Windows
-    
-Not tested
-
-
-Commands
--------------------------
-
-&larr; &uarr; &rarr; &darr; = Move
-
-
