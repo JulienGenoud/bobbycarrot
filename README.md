@@ -8,7 +8,7 @@ EPIC Epitech BOBBY CARROT
 
 Install last version of Chrome / Firefox / Opera
 
-#### Mac OS X / Linux 
+#### Mac OS X - GNU/Linux 
 
     $./serve.sh
 
