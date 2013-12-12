@@ -5,12 +5,14 @@ EPIC Epitech BOBBY CARROT
 * Minified version comming...
 * play at https://php-bobbycarrot.rhcloud.com/
 
-## Features
+### Features
 
 * Move with arrow keys
 * load objects
 
-## Changelog
+### Changelog
+
+
 
 ### Install Dependencies
 
@@ -25,8 +27,7 @@ Install Browser support webgl + phyton (for web server)
 Not tested
 
 
-Commands
--------------------------
+### Commands
 
 &larr; &uarr; &rarr; &darr; = Move
 
