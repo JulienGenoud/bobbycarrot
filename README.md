@@ -3,6 +3,7 @@ EPIC Epitech BOBBY CARROT
 
 * Using Three.js
 * Minified version comming...
+* play at https://php-bobbycarrot.rhcloud.com/
 
 ### Install Dependencies
 
