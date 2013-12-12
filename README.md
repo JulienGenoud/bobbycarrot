@@ -5,9 +5,16 @@ EPIC Epitech BOBBY CARROT
 * Minified version comming...
 * play at https://php-bobbycarrot.rhcloud.com/
 
+## Features
+
+* Move with arrow keys
+* load objects
+
+## Changelog
+
 ### Install Dependencies
 
-Install last version of Chrome / Firefox / Opera
+Install Browser support webgl + phyton (for web server)
 
 #### Mac OS X - GNU/Linux 
 
