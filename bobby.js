@@ -1,14 +1,16 @@
 var camera, scene, renderer;
 var mesh;
 var mouseX = 0, mouseY = 10;
+var menu = 1;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 var rotate;
 var hero_obj;
 var plane;
+var Material_characters;
+var level;
+var gui = 0;
 
-		// var audio = document.getElementById("music")
-		// audio.volume=0.2;
 		
 init();
 animate();
@@ -44,12 +46,12 @@ function init() {
 		font: "helvetiker", weight: "normal", style: "normal",
 	});
 
-	var Gmenu = new THREE.TextGeometry( "--------------------------", {
+	var Gmenu = new THREE.TextGeometry( "------------v0.3-------------", {
 		size: 1.2, height: 0.4, curveSegments: 3,
 		font: "helvetiker", weight: "normal", style: "normal",
 	});
 
-	var Material_characters = new THREE.MeshLambertMaterial( { color: 0xEEEEEE} );
+	Material_characters = new THREE.MeshLambertMaterial( { color: 0xEEEEEE} );
 
 	mesh_title = new THREE.Mesh( Gtitle, Material_characters );
 	mesh_menu = new THREE.Mesh( Gmenu, Material_characters );
@@ -67,13 +69,12 @@ function init() {
 	mesh_menu.rotation.x  -= 1;
 	mesh_title.rotation.x  -= 0.8;
 
-	minus.rotation.y  += 0.15;
-	maxus.rotation.y  += 0.15;
-	mesh_menu.rotation.y  += 0;
+	minus.rotation.y  = 0.15;
+	maxus.rotation.y  = 0.15;
 
 	camera.position.z = 5;
 	camera.position.y = 10;
-	camera.rotation.x -= 1;
+	camera.rotation.x = -1;
 
 	setbasepostion (-7.8,0.5,minus);
 	setbasepostion (-7.8,2.5,maxus);
@@ -128,33 +129,46 @@ function init() {
 	var jsonLoader = new THREE.JSONLoader();
 	jsonLoader.load( "objs/bunny_obj.js", addModelToScene ); 
 
+
 }
 
-window.onload = function() {
-  var gui = new dat.GUI();
+function initgui() {
+  var gui = new dat.GUI({ autoPlace: false });
+  var customContainer = document.getElementById('gui');
+	customContainer.appendChild(gui.domElement);
+
+	var f0x = gui.addFolder('camera position');
+	f0x.add(camera.position, 'x', -25, 25);
+	f0x.add(camera.position, 'y', -25, 25);
+	f0x.add(camera.position, 'z', -25, 25);
+
+	var f0 = gui.addFolder('camera rotation');
+	f0.add(camera.rotation, 'x', -6, 6);
+	f0.add(camera.rotation, 'y', -6, 6);
+	f0.add(camera.rotation, 'z', -6, 6);
+
 
 	var f1 = gui.addFolder('hero position');
-	f1.add(hero_obj.position, 'x', -5, 5);
-	f1.add(hero_obj.position, 'y', -5, 5);
-	f1.add(hero_obj.position, 'z', -5, 5);
+	f1.add(hero_obj.position, 'x', -15, 15);
+	f1.add(hero_obj.position, 'y', -15, 15);
+	f1.add(hero_obj.position, 'z', -15, 15);
 
 
 	var f2 = gui.addFolder('hero size');
-	f2.add(hero_obj.scale, 'x', -5, 5);
-	f2.add(hero_obj.scale, 'y', -5, 5);
-	f2.add(hero_obj.scale, 'z', -5, 5);
+	f2.add(hero_obj.scale, 'x', -15, 15);
+	f2.add(hero_obj.scale, 'y', -15, 15);
+	f2.add(hero_obj.scale, 'z', -15, 15);
+	// f2.add(params, 'interation')
 
-	var f3 = gui.addFolder('plane');
-	f3.add(plane.rotation, 'x', -5, 5);
-	f3.add(plane.rotation, 'y', -5, 5);
-	f3.add(plane.rotation, 'z', -5, 5);
+	var f3 = gui.addFolder('plane rotation');
+	f3.add(plane.rotation, 'x', -6, 6);
+	f3.add(plane.rotation, 'y', -6, 6);
+	f3.add(plane.rotation, 'z', -6, 6);
 
 	// var f4 = gui.addFolder('plane2');
 	// f4.add(plane.rotation, 'x', -5, 5);
 	// f4.add(plane.rotation, 'y', -5, 5);
 	// f4.add(plane.rotation, 'z', -5, 5);
-
-	gui.close();
 };
 
 
@@ -211,7 +225,6 @@ function onKeyDown ( event ) {
 	}
 };
 
-var timeplus = 0;
 
 function onWindowResize() {
 
@@ -224,23 +237,55 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
+function initlevel(level_name){
+	scene.remove( mesh_title );
+	var Gtitle = new THREE.TextGeometry(level_name, {
+		size: 3, height: 1.5, curveSegments: 3,
+		font: "helvetiker", weight: "bold", style: "normal",
+	});
+	mesh_title = new THREE.Mesh( Gtitle, Material_characters );
+
+	scene.add( mesh_title );
+	setbasepostion (-6,-9,mesh_title);
+	mesh_title.rotation.x  -= 0.8;
+}
+
+function initlevel1() {
+	scene.remove( minus );
+	scene.remove( maxus );	
+	scene.remove( mesh_menu );
+	initlevel("level1");
+}
+
 function animate() {
 
 	requestAnimationFrame( animate );
-//.rotation.y += 0.01;
-stats.update();
+	stats.update();
 
- // if ( hero.position.x == -8 && hero.position.z == 0) {
- // 	audio.volume = 0.3;
- // }
+ 	if (hero_obj && gui == 0) {
+		initgui();
+		gui = 1;	
+	}
 
- // if ( hero.position.x == -6 &&	hero.position.z == 0) {
- // 	audio.volume = 0;
- // }
+	if ( hero_obj && hero_obj.position.x == -2 && hero_obj.position.z == 0 && menu == 1) {
+		initlevel1();
+		level = 1;
+	}
+
+	// if (level == 1)
+	// {
+
+	// }
+
+ // if ( hero_obj.position.x === -6 &&	hero_obj.position.z === 0) {
+ // 		//audio.volume = 0;
+ // 	}
 
  // if ( hero.position.x == -4 &&	hero.position.z == 0) {
  // 	audio.volume = 0.9;
  // }
 
  renderer.render( scene, camera );
+
+
 }
