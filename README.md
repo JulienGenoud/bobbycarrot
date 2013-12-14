@@ -4,7 +4,7 @@ EPIC Epitech BOBBY CARROT
 * Using Three.js
 * Minified version comming...
 * play at http://nodejs-bobbycarrot.rhcloud.com/
-* old php mirror ~~https://php-bobbycarrot.rhcloud.com/~~
+* ~~old php mirror https://php-bobbycarrot.rhcloud.com/~~
 
 ### Features
 
