@@ -4,16 +4,16 @@ EPIC Epitech BOBBY CARROT
 * Using Three.js
 * Minified version comming...
 * play at http://nodejs-bobbycarrot.rhcloud.com/
-* php mirror (https://php-bobbycarrot.rhcloud.com/)
+* old php mirror ~~https://php-bobbycarrot.rhcloud.com/~~
 
 ### Features
 
 * Move with arrow keys
 * load objects
+* collisions
 
 ### Next Features
 
-* collision 
 * levels 
 * level editors + database storage (Local Storage)
 * animations
