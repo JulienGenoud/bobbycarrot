@@ -8,13 +8,20 @@ var rotate;
 var hero_obj;
 var plane;
 var Material_characters;
-var level;
+var level = 0;
 var gui = 0;
 var colision = [[]];
+var carrot_pos = [[]];
+var carrot = [];
+var nb_carrot ;
+
+var cube = [];
 
 		
 init();
 animate();
+
+
 
 function init() {
 
@@ -25,62 +32,8 @@ function init() {
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
 	scene = new THREE.Scene();
 
-	var geometry = new THREE.PlaneGeometry(121,121, 121, 121);
-	var material = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
-	plane = new THREE.Mesh( geometry, material );
-	scene.add( plane );
-	plane.position.y -= 0.5;
-	plane.rotation.x -= 1.571;
 
-	var Gtitle = new THREE.TextGeometry( "{Bobby Carrot}", {
-		size: 3, height: 0.5, curveSegments: 3,
-		font: "helvetiker", weight: "bold", style: "normal",
-	});
-
-	var plus = new THREE.TextGeometry( "Create  •", {
-		size: 1.1, height: 0.2, curveSegments: 3,
-		font: "helvetiker", weight: "normal", style: "normal",
-	});
-
-	var moins = new THREE.TextGeometry( "Play      •", {
-		size: 1.1, height: 0.2, curveSegments: 3,
-		font: "helvetiker", weight: "normal", style: "normal",
-	});
-
-	var Gmenu = new THREE.TextGeometry( "-----------***-------------", {
-		size: 1.2, height: 0.4, curveSegments: 3,
-		font: "helvetiker", weight: "normal", style: "normal",
-	});
-
-	Material_characters = new THREE.MeshLambertMaterial( { color: 0xEEEEEE} );
-
-	mesh_title = new THREE.Mesh( Gtitle, Material_characters );
-	mesh_menu = new THREE.Mesh( Gmenu, Material_characters );
-	minus = new THREE.Mesh( moins, Material_characters );
-	maxus = new THREE.Mesh( plus, Material_characters );
-
-
-	scene.add( minus );
-	scene.add( maxus );		
-	scene.add( mesh_title );
-	scene.add( mesh_menu );
-
-	minus.rotation.x  -= 1.571;
-	maxus.rotation.x  -= 1.571;
-	mesh_menu.rotation.x  -= 1;
-	mesh_title.rotation.x  -= 0.8;
-
-	minus.rotation.y  = 0.15;
-	maxus.rotation.y  = 0.15;
-
-	camera.position.z = 5;
-	camera.position.y = 10;
-	camera.rotation.x = -1;
-
-	setbasepostion (-7.8,0.5,minus);
-	setbasepostion (-7.8,2.5,maxus);
-	setbasepostion (-8,-2,mesh_menu);
-	setbasepostion (-15,-7,mesh_title);
+	init_menu();
 
 
 	//red
@@ -129,12 +82,69 @@ function init() {
 
 	var jsonLoader = new THREE.JSONLoader();
 	jsonLoader.load( "objs/bunny_obj.js", addModelToScene ); 
-
-
 }
 
+function init_menu() {
+
+	camera.position.z = 5;
+	camera.position.y = 10;
+	camera.position.x = 0;
+	camera.rotation.x = -1;
+
+	var geometry = new THREE.PlaneGeometry(121,121, 121, 121);
+	var material = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
+	plane = new THREE.Mesh( geometry, material );
+	scene.add( plane );
+	plane.position.y -= 0.5;
+	plane.rotation.x -= 1.571;
+
+	var Gtitle = new THREE.TextGeometry( "{Bobby Carrot}", {
+		size: 3, height: 0.5, curveSegments: 3,
+		font: "helvetiker", weight: "bold", style: "normal",
+	});
+
+	var plus = new THREE.TextGeometry( "Create  •", {
+		size: 1.1, height: 0.2, curveSegments: 3,
+		font: "helvetiker", weight: "normal", style: "normal",
+	});
+
+	var moins = new THREE.TextGeometry( "Play      •", {
+		size: 1.1, height: 0.2, curveSegments: 3,
+		font: "helvetiker", weight: "normal", style: "normal",
+	});
+
+	var Gmenu = new THREE.TextGeometry( "-----------***-------------", {
+		size: 1.2, height: 0.4, curveSegments: 3,
+		font: "helvetiker", weight: "normal", style: "normal",
+	});
+
+	Material_characters = new THREE.MeshLambertMaterial( { color: 0xEEEEEE} );
+
+	mesh_title = new THREE.Mesh( Gtitle, Material_characters );
+	mesh_menu = new THREE.Mesh( Gmenu, Material_characters );
+	minus = new THREE.Mesh( moins, Material_characters );
+	maxus = new THREE.Mesh( plus, Material_characters );
 
 
+	scene.add( minus );
+	scene.add( maxus );		
+	scene.add( mesh_title );
+	scene.add( mesh_menu );
+
+	setbasepostion (-7.8,0.5,minus);
+	setbasepostion (-7.8,2.5,maxus);
+	setbasepostion (-8,-2,mesh_menu);
+	setbasepostion (-15,-7,mesh_title);
+
+
+	minus.rotation.x  -= 1.571;
+	maxus.rotation.x  -= 1.571;
+	mesh_menu.rotation.x  -= 1;
+	mesh_title.rotation.x  -= 0.8;
+
+	minus.rotation.y  = 0.15;
+	maxus.rotation.y  = 0.15;
+}
 
 function initgui() {
   var gui = new dat.GUI({ autoPlace: false });
@@ -229,29 +239,27 @@ function onKeyDown ( event ) {
 	if (hero_obj && detect(event.keyCode) == 0) {
 		switch( event.keyCode ) {
 			case 37: /*gauche*/
-				console.log("pos en x :" + hero_obj.position.x);
-				hero_obj.position.x -= 1;
 				hero_obj.rotation.y = 0.1;
-				console.log("apres pos en x :" + hero_obj.position.x);
+				hero_obj.position.x -= 1;
+				if (menu == 0) { camera.position.x -= 1;}
 			break;
 
 			case 39: /*droite*/
-				console.log("pos en x :" + hero_obj.position.x);
 				hero_obj.rotation.y = 3.5;
 				hero_obj.position.x += 1;
-				console.log("apres pos en x :" + hero_obj.position.x);
+				if (menu == 0) { camera.position.x += 1;}
 			break;
 
 			case 38: /*haut*/
-				console.log("pos en z :" + -hero_obj.position.z);
 				hero_obj.rotation.y = 5;
 				hero_obj.position.z -= 1;
+				if (menu == 0) { camera.position.z -= 1;}
 			break;
 
 			case 40: /*bas*/
-				console.log("pos en z :" + -hero_obj.position.z);
 				hero_obj.rotation.y = 1;
 				hero_obj.position.z += 1;
+				if (menu == 0) { camera.position.z += 1;}
 			break;	
 		}
 	}
@@ -269,7 +277,8 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-function initlevel(level_name, size_wall){
+
+function initlevel(level_name, size_wall, titley){
 	scene.remove( mesh_title );
 	var Gtitle = new THREE.TextGeometry(level_name, {
 		size: 3, height: 1.5, curveSegments: 3,
@@ -278,25 +287,17 @@ function initlevel(level_name, size_wall){
 	mesh_title = new THREE.Mesh( Gtitle, Material_characters );
 
 	scene.add( mesh_title );
-	setbasepostion (-6,-9,mesh_title);
+	setbasepostion (-6,	titley, mesh_title);
 	mesh_title.rotation.x  -= 0.8;
-}
-
-function initlevel1() {
-	scene.remove( minus );
-	scene.remove( maxus );	
-	scene.remove( mesh_menu );
-	initlevel("level1");
 
 
-	var cube = [];
+
 
 	var geometry = new THREE.CubeGeometry( 0.7, 0.7, 0.7 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 
-
-	var length = 8;
-	var height = 8;
+	var length = size_wall;
+	var height = length;
 
 	var side = [[-(length/2),-(length/2)],[(height/2),-(height/2)]];
 
@@ -323,13 +324,72 @@ function initlevel1() {
 	colision[length+1] = [length / 2,length/2];
 	setbasepostion (colision[length+1][0],colision[length+1][1],cube[length*4+1]);
 
-	var geometry = new THREE.CylinderGeometry(0, 0.5, 2, 50, 50, false);
+	var geometry = new THREE.CylinderGeometry(0, 0.3, 2, 50, 50, false);
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
-	cubea = new THREE.Mesh( geometry, material );
-	scene.add( cubea );
-	cubea.position.y = 0.5;
 
-	setbasepostion(0,2,cubea)
+
+	for(var i = 0; i < nb_carrot; i++){
+		carrot[i] = new THREE.Mesh( geometry, material );
+		scene.add( carrot[i] );
+		carrot[i].position.y = 0.5;
+		setbasepostion(carrot_pos[i][0],carrot_pos[i][1],carrot[i])
+	}
+}
+
+
+
+function initlevel1() {
+	scene.remove( minus );
+	scene.remove( maxus );	
+	scene.remove( mesh_menu );
+
+	nb_carrot = 3;
+	carrot_pos = [[0,2],[-2,3],[3,0]];
+
+	initlevel("Level1", 8, -9);
+
+}
+
+function initlevel2() {
+	for(var i = 0; i < (cube.length * 2); i++){
+		scene.remove( cube[i] );
+	}
+
+	nb_carrot = 5;
+	carrot_pos = [[4,4],[-2,3],[3,1],[3,-4],[1,4]];
+
+	initlevel("Level2", 10, -8);
+}
+
+function carrot_verif() {
+	for(var i = 0; i < carrot_pos.length; i++){
+		if (hero_obj.position.x == carrot_pos[i][0] && hero_obj.position.z == carrot_pos[i][1] && 
+			carrot_pos[i] != false ) {
+			scene.remove( carrot[i] );
+			nb_carrot -= 1;
+			carrot_pos[i] = false;
+		}
+	}
+	return ((nb_carrot == 0) ? 0 : 1);
+}
+
+
+function restore_menu() {
+	for(var i = 0; i < (cube.length * 2); i++){
+		scene.remove( cube[i] );
+	}
+
+	scene.remove( mesh_title );
+
+	nb_carrot = 0;
+	carrot_pos = [];
+
+
+	level = 0;
+	menu = 1;
+	init_menu();
+	setbasepostion (2,1,hero_obj);
+	hero_obj.rotation.y = 0.1;
 }
 
 function animate() {
@@ -339,27 +399,26 @@ function animate() {
 
  	if (hero_obj && gui == 0) {
 		initgui();
-		gui = 1;	
+		gui = 1;
 	}
 
-	if ( hero_obj && hero_obj.position.x == -2 && hero_obj.position.z == 0 && menu == 1) {
+	if ( hero_obj && hero_obj.position.x == -2 && hero_obj.position.z == 0 && menu == 1 && level == 0) {
+		setbasepostion (0,0,hero_obj);
 		initlevel1();
 		level = 1;
 		menu = 0;
 	}
 
-	if (level == 1)
+	if (hero_obj && level == 1 && carrot_verif() == 0)
 	{
-
+		initlevel2();
+		console.log("level 2");
+		level = 2;
 	}
 
- // if ( hero_obj.position.x === -6 &&	hero_obj.position.z === 0) {
- // 		//audio.volume = 0;
- // 	}
-
- // if ( hero.position.x == -4 &&	hero.position.z == 0) {
- // 	audio.volume = 0.9;
- // }
+	if (hero_obj && level == 2 && carrot_verif() == 0) {
+		restore_menu();
+	}
 
  renderer.render( scene, camera );
 
