@@ -21,7 +21,7 @@ EPIC Epitech BOBBY CARROT
 
 ### Install Dependencies
 
-Install Browser support webgl + phyton (for web server)
+Install Browser with webgl support + phyton (for web server)
 
 #### Mac OS X - GNU/Linux 
 
