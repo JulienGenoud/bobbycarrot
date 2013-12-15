@@ -377,6 +377,7 @@ function carrot_verif() {
 function restore_menu() {
 	for(var i = 0; i < (cube.length * 2); i++){
 		scene.remove( cube[i] );
+		colision[i] = false;
 	}
 
 	scene.remove( mesh_title );
