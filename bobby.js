@@ -369,7 +369,7 @@ function initlevel3() {
 		scene.remove( cube[i] );
 	}
 	nb_carrot = 10;
-	initlevel("Level3", 13, -10);
+	initlevel("Level3", 14, -10);
 }
 
 function carrot_verif() {
