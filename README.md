@@ -11,17 +11,17 @@ EPIC Epitech BOBBY CARROT
 * Move with arrow keys
 * load objects
 * collisions
+* level (1+2)
 
 ### Next Features
 
-* levels 
 * level editors + database storage (Local Storage)
 * animations
 * online level sharing (mongodb)
 
 ### Install Dependencies
 
-Install Browser support webgl + phyton (for web server)
+Install Browser with webgl support + phyton (for web server)
 
 #### Mac OS X - GNU/Linux 
 
