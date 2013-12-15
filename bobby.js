@@ -10,6 +10,7 @@ var plane;
 var Material_characters;
 var level;
 var gui = 0;
+var colision = [[]];
 
 		
 init();
@@ -46,7 +47,7 @@ function init() {
 		font: "helvetiker", weight: "normal", style: "normal",
 	});
 
-	var Gmenu = new THREE.TextGeometry( "------------v0.3-------------", {
+	var Gmenu = new THREE.TextGeometry( "-----------***-------------", {
 		size: 1.2, height: 0.4, curveSegments: 3,
 		font: "helvetiker", weight: "normal", style: "normal",
 	});
@@ -132,6 +133,9 @@ function init() {
 
 }
 
+
+
+
 function initgui() {
   var gui = new dat.GUI({ autoPlace: false });
   var customContainer = document.getElementById('gui');
@@ -155,9 +159,9 @@ function initgui() {
 
 
 	var f2 = gui.addFolder('hero size');
-	f2.add(hero_obj.scale, 'x', -15, 15);
-	f2.add(hero_obj.scale, 'y', -15, 15);
-	f2.add(hero_obj.scale, 'z', -15, 15);
+	f2.add(hero_obj.scale, 'x', 0.10, 15);
+	f2.add(hero_obj.scale, 'y', 0.10, 15);
+	f2.add(hero_obj.scale, 'z', 0.10, 15);
 	// f2.add(params, 'interation')
 
 	var f3 = gui.addFolder('plane rotation');
@@ -189,39 +193,67 @@ function setbasepostion ( a , b, elem ) {
 };
 
 
+function detect (lol) {
+	var x, z;
+
+	z = hero_obj.position.z;
+	x =	hero_obj.position.x;
+
+	switch(lol) {
+		case 37: /*gauche*/
+			x =	x - 1;
+		break;
+		case 39: /*droite*/
+			x = x + 1;
+		break;
+		case 38: /*haut*/
+			z = z - 1;
+		break;
+		case 40: /*bas*/
+			z = z + 1;
+		break;	
+	}
+
+	for(var i = 0; i < colision.length; i++){
+    if (colision[i][0] == x && colision[i][1] ==  z) {
+      	return (1);
+      }
+		}
+	return (0);
+}
+
 function onKeyDown ( event ) {
 
-	console.log(event.keyCode);
+	// console.log(event.keyCode);
 
-	switch( event.keyCode ) {
-	//38 haut
-	//40 bas
-	//37 gauche
-	//39 droite
+	if (hero_obj && detect(event.keyCode) == 0) {
+		switch( event.keyCode ) {
+			case 37: /*gauche*/
+				console.log("pos en x :" + hero_obj.position.x);
+				hero_obj.position.x -= 1;
+				hero_obj.rotation.y = 0.1;
+				console.log("apres pos en x :" + hero_obj.position.x);
+			break;
 
-	case 37: /*gauche*/
-	console.log("pos en x :" + hero_obj.position.x);
-		hero_obj.position.x -= 1;
-		hero_obj.rotation.y = 0.1;
-		break;
+			case 39: /*droite*/
+				console.log("pos en x :" + hero_obj.position.x);
+				hero_obj.rotation.y = 3.5;
+				hero_obj.position.x += 1;
+				console.log("apres pos en x :" + hero_obj.position.x);
+			break;
 
-		case 39: /*droite*/
-		console.log("pos en x :" + hero_obj.position.x);
-		hero_obj.rotation.y = 3.5;
-		hero_obj.position.x += 1;
-		break;
+			case 38: /*haut*/
+				console.log("pos en z :" + -hero_obj.position.z);
+				hero_obj.rotation.y = 5;
+				hero_obj.position.z -= 1;
+			break;
 
-		case 38: /*haut*/
-		console.log("pos en z :" + -hero_obj.position.z);
-		hero_obj.rotation.y = 5;
-		hero_obj.position.z -= 1;
-		break;
-
-		case 40: /*bas*/
-		console.log("pos en z :" + -hero_obj.position.z);
-		hero_obj.rotation.y = 1;
-		hero_obj.position.z += 1;
-		break;	
+			case 40: /*bas*/
+				console.log("pos en z :" + -hero_obj.position.z);
+				hero_obj.rotation.y = 1;
+				hero_obj.position.z += 1;
+			break;	
+		}
 	}
 };
 
@@ -237,7 +269,7 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-function initlevel(level_name){
+function initlevel(level_name, size_wall){
 	scene.remove( mesh_title );
 	var Gtitle = new THREE.TextGeometry(level_name, {
 		size: 3, height: 1.5, curveSegments: 3,
@@ -255,6 +287,49 @@ function initlevel1() {
 	scene.remove( maxus );	
 	scene.remove( mesh_menu );
 	initlevel("level1");
+
+
+	var cube = [];
+
+	var geometry = new THREE.CubeGeometry( 0.7, 0.7, 0.7 );
+	var material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+
+
+	var length = 8;
+	var height = 8;
+
+	var side = [[-(length/2),-(length/2)],[(height/2),-(height/2)]];
+
+	for(var i = 0; i < length; i++){
+
+		for(var j = 0; j < 2; j++){
+			cube[i+(length*j)] = new THREE.Mesh( geometry, material );
+			scene.add( cube[i+(length*j)] );
+			colision[i+(length*j)] = [ side[j][0] ,i + side[j][1]];
+			setbasepostion (colision[i+(length*j)][0],colision[i+(length*j)][1],cube[i+(length*j)]);
+		}
+	}
+
+	for(var i = 0; i < length; i++){
+			for(var j = 2; j < 4; j++){
+			cube[i+(length*j)] = new THREE.Mesh( geometry, material );
+			scene.add( cube[i+(length*j)] );
+			colision[i+(length*j)] = [ i + side[j-2][1] ,side[j-2][0]];
+			setbasepostion (colision[i+(length*j)][0],colision[i+(length*j)][1],cube[i+(length*j)]);
+		}
+	}
+	cube[length*4+1] = new THREE.Mesh( geometry, material );
+	scene.add( cube[length*4+1] );
+	colision[length+1] = [length / 2,length/2];
+	setbasepostion (colision[length+1][0],colision[length+1][1],cube[length*4+1]);
+
+	var geometry = new THREE.CylinderGeometry(0, 0.5, 2, 50, 50, false);
+	var material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+	cubea = new THREE.Mesh( geometry, material );
+	scene.add( cubea );
+	cubea.position.y = 0.5;
+
+	setbasepostion(0,2,cubea)
 }
 
 function animate() {
@@ -270,12 +345,13 @@ function animate() {
 	if ( hero_obj && hero_obj.position.x == -2 && hero_obj.position.z == 0 && menu == 1) {
 		initlevel1();
 		level = 1;
+		menu = 0;
 	}
 
-	// if (level == 1)
-	// {
+	if (level == 1)
+	{
 
-	// }
+	}
 
  // if ( hero_obj.position.x === -6 &&	hero_obj.position.z === 0) {
  // 		//audio.volume = 0;
