@@ -36,8 +36,11 @@ function init() {
 	init_menu();
 
 
+	var color = new THREE.Color( 0xffffff );
+   color.setRGB( Math.random()+0.5, 0,0);
+
 	//red
-	var light = new THREE.PointLight( 0xff0000, 0.7, 12 );
+	var light = new THREE.PointLight( color, 0.7, 12 );
 	light.position.set( 2, 2, 1 );
 	scene.add( light );
 	//bleu
@@ -187,7 +190,9 @@ function initgui() {
 
 
 function addModelToScene( geometry, materials ) {
-	var material = new THREE.MeshFaceMaterial( materials );
+	var color = new THREE.Color( 0xffffff );
+   color.setRGB( Math.random()+0.6, Math.random()+0.5,Math.random()+0.5);
+	var material = new THREE.MeshLambertMaterial(  { color: color } );
 	hero_obj = new THREE.Mesh( geometry, material );
 	hero_obj.scale.set(0.18,0.18,0.18);
 	scene.add( hero_obj );
