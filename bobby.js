@@ -293,6 +293,12 @@ function initlevel(level_name, size_wall, titley){
 
 
 
+	for(var i = 0; i < nb_carrot; i++){
+		carrot_pos[i] = [];
+		carrot_pos[i][0] = Math.floor((Math.random()*(size_wall - 1))-((size_wall/2)-1));
+		carrot_pos[i][1] = Math.floor((Math.random()*(size_wall - 1))-((size_wall/2)-1));
+	}
+
 	var geometry = new THREE.CubeGeometry( 0.7, 0.7, 0.7 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 
@@ -334,6 +340,8 @@ function initlevel(level_name, size_wall, titley){
 		carrot[i].position.y = 0.5;
 		setbasepostion(carrot_pos[i][0],carrot_pos[i][1],carrot[i])
 	}
+
+
 }
 
 
@@ -342,10 +350,7 @@ function initlevel1() {
 	scene.remove( minus );
 	scene.remove( maxus );	
 	scene.remove( mesh_menu );
-
-	nb_carrot = 3;
-	carrot_pos = [[0,2],[-2,3],[3,0]];
-
+	nb_carrot = 4;
 	initlevel("Level1", 8, -9);
 
 }
@@ -354,11 +359,17 @@ function initlevel2() {
 	for(var i = 0; i < (cube.length * 2); i++){
 		scene.remove( cube[i] );
 	}
-
-	nb_carrot = 5;
-	carrot_pos = [[4,4],[-2,3],[3,1],[3,-4],[1,4]];
-
+	nb_carrot = 8;
 	initlevel("Level2", 10, -8);
+}
+
+
+function initlevel3() {
+	for(var i = 0; i < (cube.length * 2); i++){
+		scene.remove( cube[i] );
+	}
+	nb_carrot = 10;
+	initlevel("Level3", 13, -10);
 }
 
 function carrot_verif() {
@@ -381,6 +392,7 @@ function restore_menu() {
 	}
 
 	scene.remove( mesh_title );
+	scene.remove( plane );
 
 	nb_carrot = 0;
 	carrot_pos = [];
@@ -417,7 +429,14 @@ function animate() {
 		level = 2;
 	}
 
-	if (hero_obj && level == 2 && carrot_verif() == 0) {
+	if (hero_obj && level == 2 && carrot_verif() == 0)
+	{
+		initlevel3();
+		console.log("level 3");
+		level = 3;
+	}
+
+	if (hero_obj && level == 3 && carrot_verif() == 0) {
 		restore_menu();
 	}
 
