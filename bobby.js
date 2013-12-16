@@ -14,6 +14,10 @@ var colision = [[]];
 var carrot_pos = [[]];
 var carrot = [];
 var nb_carrot ;
+var Torus;
+var buffer;
+var bowl;
+
 
 var cube = [];
 
@@ -343,7 +347,7 @@ function initlevel(level_name, size_wall, titley){
 
 	for(var i = 0; i < nb_carrot; i++){
 		var color = new THREE.Color( 0xffffff );
-   		color.setRGB( Math.random()+i*0.2, Math.random()+i*0.2,Math.random()+i*0.2);
+   	color.setRGB( Math.random()+i*0.2, Math.random()+i*0.2,Math.random()+i*0.2);
 		material = new THREE.MeshLambertMaterial( { color: color } );
 		carrot[i] = new THREE.Mesh( geometry, material );
 		scene.add( carrot[i] );
@@ -394,6 +398,56 @@ function carrot_verif() {
 	return ((nb_carrot == 0) ? 0 : 1);
 }
 
+function initcreate() {
+	scene.remove( minus );
+	scene.remove( maxus );	
+	scene.remove( mesh_menu );
+
+	var moins = new THREE.TextGeometry( "Restore Menu    •", {
+		size: 1.1, height: 0.2, curveSegments: 3,
+		font: "helvetiker", weight: "normal", style: "normal",
+	});
+	Material_characters = new THREE.MeshLambertMaterial( { color: 0xEEEEEE} );
+	minus = new THREE.Mesh( moins, Material_characters );
+	scene.add( minus );
+	setbasepostion (-5.8,-3,minus);
+	minus.rotation.x  -= 1.571;
+
+	var geometry = new THREE.CubeGeometry( 0.7, 0.7, 0.7 );
+	var color = new THREE.Color( 0xf52280 );
+	var material = new THREE.MeshLambertMaterial( { color: color } );
+	cube[0] = new THREE.Mesh( geometry, material );
+	scene.add( cube[0] );
+	geometry = new THREE.SphereGeometry(0.6,32,16);
+	material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+	bowl = new THREE.Mesh( geometry, material );
+	scene.add( bowl );
+
+	setbasepostion(-3,2,cube[0])
+	setbasepostion (-1,2,hero_obj);
+	setbasepostion (1,2,bowl);
+
+	geometry = new THREE.CylinderGeometry(0, 0.3, 2, 50, 50, false);
+	color = new THREE.Color( 0xffffff );
+	material = new THREE.MeshLambertMaterial( { color: color } );
+	carrot[0] = new THREE.Mesh( geometry, material );
+	scene.add( carrot[0]);
+	carrot[0].position.y = 0.5;
+	setbasepostion (3,2,carrot[0]);
+
+	geometry = new THREE.TorusKnotGeometry( 50, 6, 160, 10, 3, 20);
+ 	color = new THREE.Color( 0xffffff );
+	material = new THREE.MeshLambertMaterial( { color: color } );
+	Torus = new THREE.Mesh( geometry, material );
+	scene.add( Torus );
+	Torus.scale.set(0.006,0.006,0.006);
+	Torus.rotation.x = 2;
+
+	setbasepostion (0,-1,Torus);
+
+	buffer = hero_obj;
+	hero_obj = Torus;
+}
 
 function restore_menu() {
 	for(var i = 0; i < (cube.length * 2); i++){
@@ -425,6 +479,22 @@ function animate() {
 		gui = 1;
 	}
 
+	if ( hero_obj && hero_obj.position.x == -2 && hero_obj.position.z == 2 && menu == 1 && level == 0) {
+		initcreate();
+		level = 0;
+		menu = 0;
+	}
+
+	if ( hero_obj && hero_obj.position.x == 6 && hero_obj.position.z == -4 && menu == 0 && level == 0) {
+ 		hero_obj = buffer;
+		scene.remove( Torus );
+		scene.remove( carrot[0] );
+		scene.remove( cube[0] );
+		scene.remove( bowl );
+		scene.remove( minus );
+		restore_menu();
+	}
+
 	if ( hero_obj && hero_obj.position.x == -2 && hero_obj.position.z == 0 && menu == 1 && level == 0) {
 		setbasepostion (0,0,hero_obj);
 		initlevel1();
@@ -435,14 +505,14 @@ function animate() {
 	if (hero_obj && level == 1 && carrot_verif() == 0)
 	{
 		initlevel2();
-		console.log("level 2");
+		//console.log("level 2");
 		level = 2;
 	}
 
 	if (hero_obj && level == 2 && carrot_verif() == 0)
 	{
 		initlevel3();
-		console.log("level 3");
+		//console.log("level 3");
 		level = 3;
 	}
 
