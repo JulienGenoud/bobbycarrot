@@ -11,7 +11,7 @@ EPIC Epitech BOBBY CARROT
 * Move with arrow keys
 * load objects
 * collisions
-* level (1+2)
+* level (1+2+3)
 
 ### Next Features
 
