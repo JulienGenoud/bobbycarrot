@@ -49,6 +49,6 @@ Not tested
     `-._\ /                       `~~"--.,_
    ------>|                                `~~"--.,_
     _.-'/ \                            ___,,,---""~~``'
-       /jgs\____,,,,....----""""~~~~````
+           \____,,,,....----""""~~~~````
 </pre>
 Art found on (http://www.retrojunkie.com/asciiart/animals/rabbits.htm)
