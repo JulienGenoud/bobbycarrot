@@ -50,5 +50,6 @@ Not tested
    ------>|                                `~~"--.,_
     _.-'/ \                            ___,,,---""~~``'
            \____,,,,....----""""~~~~````
+           
+            http://www.retrojunkie.com/asciiart/animals/rabbits.htm
 </pre>
-Art found on (http://www.retrojunkie.com/asciiart/animals/rabbits.htm)
