@@ -36,11 +36,9 @@ function init() {
 	init_menu();
 
 
-	var color = new THREE.Color( 0xffffff );
-   color.setRGB( Math.random()+0.5, 0,0);
 
 	//red
-	var light = new THREE.PointLight( color, 0.7, 12 );
+	var light = new THREE.PointLight( 0xff0000, 0.7, 12 );
 	light.position.set( 2, 2, 1 );
 	scene.add( light );
 	//bleu
@@ -116,7 +114,7 @@ function init_menu() {
 		font: "helvetiker", weight: "normal", style: "normal",
 	});
 
-	var Gmenu = new THREE.TextGeometry( "-----------***-------------", {
+	var Gmenu = new THREE.TextGeometry( "*-------------------------*", {
 		size: 1.2, height: 0.4, curveSegments: 3,
 		font: "helvetiker", weight: "normal", style: "normal",
 	});
@@ -315,6 +313,8 @@ function initlevel(level_name, size_wall, titley){
 	for(var i = 0; i < length; i++){
 
 		for(var j = 0; j < 2; j++){
+			var color = new THREE.Color( 0x8022f5 );
+			material = new THREE.MeshLambertMaterial( { color: color } );
 			cube[i+(length*j)] = new THREE.Mesh( geometry, material );
 			scene.add( cube[i+(length*j)] );
 			colision[i+(length*j)] = [ side[j][0] ,i + side[j][1]];
@@ -324,6 +324,8 @@ function initlevel(level_name, size_wall, titley){
 
 	for(var i = 0; i < length; i++){
 			for(var j = 2; j < 4; j++){
+			var color = new THREE.Color( 0xf52280 );
+			material = new THREE.MeshLambertMaterial( { color: color } );
 			cube[i+(length*j)] = new THREE.Mesh( geometry, material );
 			scene.add( cube[i+(length*j)] );
 			colision[i+(length*j)] = [ i + side[j-2][1] ,side[j-2][0]];
@@ -340,6 +342,9 @@ function initlevel(level_name, size_wall, titley){
 
 
 	for(var i = 0; i < nb_carrot; i++){
+		var color = new THREE.Color( 0xffffff );
+   		color.setRGB( Math.random()+i*0.2, Math.random()+i*0.2,Math.random()+i*0.2);
+		material = new THREE.MeshLambertMaterial( { color: color } );
 		carrot[i] = new THREE.Mesh( geometry, material );
 		scene.add( carrot[i] );
 		carrot[i].position.y = 0.5;
