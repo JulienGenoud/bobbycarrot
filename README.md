@@ -12,6 +12,7 @@ EPIC Epitech BOBBY CARROT
 * load objects
 * collisions
 * level (1+2+3)
+* Scores + bestscores stored locally
 
 ### Next Features
 
