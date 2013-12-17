@@ -17,10 +17,10 @@ var nb_carrot ;
 var Torus;
 var buffer;
 var bowl;
-
-
 var cube = [];
-
+var date1, date2;
+var score1 = 0, score2 = 0, score3 = 0;
+var Bscore1 = 0, Bscore2 = 0, Bscore3 = 0;
 		
 init();
 animate();
@@ -36,10 +36,14 @@ function init() {
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
 	scene = new THREE.Scene();
 
+	initstorage();
+
+	document.getElementById("score").innerHTML= "<i>SCORES</i><br>" +
+	"Level 1 = <b>" + score1 + "</b> Best = <b>" + Bscore1
+	+ "</b><br>" + "Level 2 = <b>" + score2 + "</b> Best = <b>" + Bscore2
+	+ "</b><br>" + "Level 3 = <b>" + score3 + "</b> Best = <b>" + Bscore3 +"</b>";
 
 	init_menu();
-
-
 
 	//red
 	var light = new THREE.PointLight( 0xff0000, 0.7, 12 );
@@ -87,6 +91,25 @@ function init() {
 
 	var jsonLoader = new THREE.JSONLoader();
 	jsonLoader.load( "objs/bunny_obj.js", addModelToScene ); 
+}
+
+function initstorage(){
+	if(typeof(Storage)!=="undefined")
+	  {
+	  if (localStorage.Bscore1 && localStorage.Bscore2 && localStorage.Bscore3)
+	    {
+	    	Bscore1 = localStorage.Bscore1 = Number(localStorage.Bscore1);
+	    	Bscore2 = localStorage.Bscore2 = Number(localStorage.Bscore2);
+	    	Bscore3 = localStorage.Bscore3 = Number(localStorage.Bscore3);
+	    }
+	  else
+	    {
+	    	localStorage.Bscore1 = Bscore1;
+	    	localStorage.Bscore2 = Bscore2;
+	    	localStorage.Bscore3 = Bscore3;
+	    }
+	  }
+	else {}
 }
 
 function init_menu() {
@@ -358,22 +381,55 @@ function initlevel(level_name, size_wall, titley){
 		carrot[i].position.y = 0.5;
 		setbasepostion(carrot_pos[i][0],carrot_pos[i][1],carrot[i])
 	}
-
-
 }
 
 
+function getscore(){
+	date2 = new Date(); // 5:00 PM
+	if (date2 < date1) {
+	    date2.setDate(date2.getDate() + 1);
+	}
+	var diff = date2 - date1;
+	return diff;
+}
+
+function affscore(){
+
+
+	if (Bscore1 < score1) {
+		Bscore1 = score1;
+	}
+	if (Bscore2 < score2) {
+		Bscore2 = score2;
+	}
+	if (Bscore3 < score3) {
+		Bscore3 = score3;
+	}
+
+	document.getElementById("score").innerHTML= "<i>100 = perfect</i><br>" +
+	"Level 1 = <b>" + score1 + "</b> Best = <b>" + Bscore1
+	+ "</b><br>" + "Level 2 = <b>" + score2 + "</b> Best = <b>" + Bscore2
+	+ "</b><br>" + "Level 3 = <b>" + score3 + "</b> Best = <b>" + Bscore3 +"</b>";
+}
 
 function initlevel1() {
+	date1 = new Date(); // 9:00 AM
+
 	scene.remove( minus );
 	scene.remove( maxus );	
 	scene.remove( mesh_menu );
 	nb_carrot = 4;
 	initlevel("Level1", 8, -9);
-
 }
 
 function initlevel2() {
+	if (getscore() > 0) {
+		score1 = Math.round((100 * 1500) / getscore());
+	}
+	console.log("level 1" + getscore());
+	affscore();
+	date1 = new Date(); // 9:00 AM
+
 	for(var i = 0; i < (cube.length * 2); i++){
 		scene.remove( cube[i] );
 	}
@@ -383,6 +439,13 @@ function initlevel2() {
 
 
 function initlevel3() {
+	if (getscore() > 0) {
+		score2 = Math.round((100 * 2916) / getscore());
+	}
+	console.log("level 2" + getscore());
+	affscore();
+	date1 = new Date(); // 9:00 AM
+
 	for(var i = 0; i < (cube.length * 2); i++){
 		scene.remove( cube[i] );
 	}
@@ -459,6 +522,12 @@ function restore_menu() {
 		colision[i] = false;
 	}
 
+	if (getscore() > 0) {
+		score3 = Math.round((100 * 5000) / getscore());
+	}
+	console.log("level 3" + getscore());
+	affscore();
+
 	scene.remove( mesh_title );
 
 	nb_carrot = 0;
@@ -472,10 +541,22 @@ function restore_menu() {
 	hero_obj.rotation.y = 0.1;
 }
 
+function updatestorage(){
+	if(typeof(Storage)!=="undefined")
+	  {
+    	localStorage.Bscore1 = Bscore1;
+    	localStorage.Bscore2 = Bscore2;
+    	localStorage.Bscore3 = Bscore3;
+	  }
+	else {}
+}
+
 function animate() {
 
 	requestAnimationFrame( animate );
 	stats.update();
+
+	updatestorage();
 
  	if (hero_obj && gui == 0) {
 		initgui();
