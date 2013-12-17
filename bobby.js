@@ -96,13 +96,17 @@ function init_menu() {
 	camera.position.x = 0;
 	camera.rotation.x = -1;
 
-	var geometry = new THREE.PlaneGeometry(121,121, 121, 121);
-	var material = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
-	plane = new THREE.Mesh( geometry, material );
-	scene.add( plane );
-	plane.position.y -= 0.5;
-	plane.rotation.x -= 1.571;
 
+	if (!plane) {
+		var geometry = new THREE.PlaneGeometry(121,121, 121, 121);
+		var material = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
+		plane = new THREE.Mesh( geometry, material );
+		scene.add( plane );
+		plane.position.y -= 0.5;
+		plane.rotation.x -= 1.571;
+	}
+
+	
 	var Gtitle = new THREE.TextGeometry( "{Bobby Carrot}", {
 		size: 3, height: 0.5, curveSegments: 3,
 		font: "helvetiker", weight: "bold", style: "normal",
@@ -456,7 +460,6 @@ function restore_menu() {
 	}
 
 	scene.remove( mesh_title );
-	scene.remove( plane );
 
 	nb_carrot = 0;
 	carrot_pos = [];
