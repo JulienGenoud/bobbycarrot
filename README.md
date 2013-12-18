@@ -3,7 +3,7 @@ EPIC Epitech BOBBY CARROT
 
 * Using Three.js - WebGL
 * play at http://http://juliengenoud.github.io/bobbycarrot/
-* ~~old node.js mirror https://php-bobbycarrot.rhcloud.com/~~
+* ~~old node.js mirror https://nodejs-bobbycarrot.rhcloud.com/~~
 * ~~old php mirror https://php-bobbycarrot.rhcloud.com/~~
 
 ### Features
