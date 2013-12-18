@@ -556,8 +556,6 @@ function animate() {
 	requestAnimationFrame( animate );
 	stats.update();
 
-	updatestorage();
-
  	if (hero_obj && gui == 0) {
 		initgui();
 		gui = 1;
@@ -601,6 +599,7 @@ function animate() {
 	}
 
 	if (hero_obj && level == 3 && carrot_verif() == 0) {
+		updatestorage();
 		restore_menu();
 	}
 
