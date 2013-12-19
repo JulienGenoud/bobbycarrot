@@ -426,7 +426,6 @@ function initlevel2() {
 	if (getscore() > 0) {
 		score1 = Math.round((100 * 1500) / getscore());
 	}
-	console.log("level 1" + getscore());
 	affscore();
 	date1 = new Date(); // 9:00 AM
 
@@ -442,7 +441,6 @@ function initlevel3() {
 	if (getscore() > 0) {
 		score2 = Math.round((100 * 2916) / getscore());
 	}
-	console.log("level 2" + getscore());
 	affscore();
 	date1 = new Date(); // 9:00 AM
 
@@ -597,12 +595,11 @@ function animate() {
 		if (getscore() > 0) {
 			score3 = Math.round((100 * 5000) / getscore());
 		}
-		console.log("level 3" + getscore());
-		updatestorage();
 		restore_menu();
 	}
 
- renderer.render( scene, camera );
+	updatestorage();
+	renderer.render( scene, camera );
 
 
 }
