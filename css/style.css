@@ -15,7 +15,7 @@ body {
 	padding: 5px;
 }
 
-#score {
+#score, #audio {
 	display: block;
 	position: absolute;
 	margin-bottom: 0px;
@@ -26,6 +26,12 @@ body {
 	width: 300px;
 	text-align: center;
 	font-size: 15px;
+}
+
+#audio {
+	height: 20px;
+	left: 0;
+	right: auto;
 }
 
 b {

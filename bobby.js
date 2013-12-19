@@ -26,7 +26,6 @@ init();
 animate();
 
 
-
 function init() {
 
 	renderer = new THREE.WebGLRenderer();
@@ -522,12 +521,6 @@ function restore_menu() {
 		colision[i] = false;
 	}
 
-	if (getscore() > 0) {
-		score3 = Math.round((100 * 5000) / getscore());
-	}
-	console.log("level 3" + getscore());
-	affscore();
-
 	scene.remove( mesh_title );
 
 	nb_carrot = 0;
@@ -599,6 +592,10 @@ function animate() {
 	}
 
 	if (hero_obj && level == 3 && carrot_verif() == 0) {
+		if (getscore() > 0) {
+			score3 = Math.round((100 * 5000) / getscore());
+		}
+		affscore();
 		updatestorage();
 		restore_menu();
 	}
