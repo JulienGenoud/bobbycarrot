@@ -1,13 +1,30 @@
 EPIC Epitech BOBBY CARROT
 ================================
 
-* Using Three.js
-* Minified version comming...
-* play at https://php-bobbycarrot.rhcloud.com/
+* Using Three.js - WebGL
+* play at http://juliengenoud.github.io/bobbycarrot/
+* ~~old node.js mirror https://nodejs-bobbycarrot.rhcloud.com/~~
+* ~~old php mirror https://php-bobbycarrot.rhcloud.com/~~
+
+### Features
+
+# * +sound
+* Move with arrow keys
+* load objects
+* collisions
+* level (1+2+3)
+* Scores + bestscores stored locally
+
+### Next Features
+
+* level editors + database storage (Local Storage)
+* animations
+* online level sharing (mongodb)
+* Minified version
 
 ### Install Dependencies
 
-Install last version of Chrome / Firefox / Opera
+Install Browser with webgl support + phyton (for web server)
 
 #### Mac OS X - GNU/Linux 
 
@@ -18,38 +35,24 @@ Install last version of Chrome / Firefox / Opera
 Not tested
 
 
-Commands
--------------------------
+### Commands
 
 &larr; &uarr; &rarr; &darr; = Move
 
 
 <pre>
-              _____
-         _.-"`     `"-._
-      .'`  ,         ,  `'.
-     / .-' |         |'-.  \
-   /  /   /  /^\ /^\  \  \  \
-  / /`    |  |()|()|  |   `\ \
- | |      |  \__|__/  |     | |
- | |      |    ___    |     | |
- | \     /    (   )    \    / |
-  \ '._.'      '-'      '._.' /
-    './     '.__,__.'     \.'
-      |       |_|_|       |
-       \                 /
-        '..__, '-' ,__..'
-         _.-'       '-._
-       .'               '.
-     /`  .'           '.  `\
-    |  .'               '.  |
-    | /                   \ |
-    \;                     ;/
-     |                     |
-     ;                     ;
-      \                   /
-    .--'.               .'--.
-   (_,    ,_         _,    ,_)
-    '.__.-' `'-----'` '-.__.'
+                 \     /
+                 \\   //
+                  )\-/(
+                  /e e\
+                 ( =T= )
+                 /`---'\
+            ____/ /___\ \
+       \   /   '''     ```~~"--.,_
+    `-._\ /                       `~~"--.,_
+   ------>|                                `~~"--.,_
+    _.-'/ \                            ___,,,---""~~``'
+           \____,,,,....----""""~~~~````
+           
+            http://www.retrojunkie.com/asciiart/animals/rabbits.htm
 </pre>
-Art found on (http://www.retrojunkie.com/asciiart/animals/rabbits.htm)
