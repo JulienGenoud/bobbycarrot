@@ -521,11 +521,6 @@ function restore_menu() {
 		scene.remove( cube[i] );
 		colision[i] = false;
 	}
-
-	if (getscore() > 0) {
-		score3 = Math.round((100 * 5000) / getscore());
-	}
-	console.log("level 3" + getscore());
 	affscore();
 
 	scene.remove( mesh_title );
@@ -599,6 +594,10 @@ function animate() {
 	}
 
 	if (hero_obj && level == 3 && carrot_verif() == 0) {
+		if (getscore() > 0) {
+			score3 = Math.round((100 * 5000) / getscore());
+		}
+		console.log("level 3" + getscore());
 		updatestorage();
 		restore_menu();
 	}
