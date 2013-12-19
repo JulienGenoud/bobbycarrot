@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Starts a basic web server on the port specified.
-# 
+#
 # ./serve.sh 3000 -> http://localhost:3000
 #
 # Copyright 2012 Eric Bidelman <ebidel@gmail.com>
@@ -20,3 +20,4 @@ else
 fi
 
 $open http://localhost:$port/index.html && python -m SimpleHTTPServer $port;
+
