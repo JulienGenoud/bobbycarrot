@@ -129,7 +129,7 @@ function init_menu() {
 	}
 
 	
-	var Gtitle = new THREE.TextGeometry( "{Bobby Carrot}", {
+	var Gtitle = new THREE.TextGeometry( "{Rabbit Jacob}", {
 		size: 3, height: 0.5, curveSegments: 3,
 		font: "helvetiker", weight: "bold", style: "normal",
 	});
